@@ -1,0 +1,51 @@
+{
+  "name": "gql",
+  "version": "0.1.0",
+  "description": "A GraphQL CLI that turns schemas into command-line interfaces.",
+  "main": "dist/index.js",
+  "bin": {
+    "gql": "dist/index.js"
+  },
+  "type": "module",
+  "scripts": {
+    "lint": "tsc --noEmit -p tsconfig.json",
+    "ci:lint": "npm run lint",
+    "ci:test": "npm run test",
+    "ci:build": "npm run build",
+    "ci:verify": "npm run ci:lint && npm run ci:test && npm run ci:build",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:update": "cross-env UPDATE_GOLDENS=1 vitest run"
+  },
+  "keywords": [
+    "graphql",
+    "cli"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "graphql": "^16.12.0",
+    "jmespath": "^0.16.0",
+    "js-yaml": "^4.1.0",
+    "picocolors": "^1.1.1",
+    "tinyglobby": "^0.2.15",
+    "yargs-parser": "^22.0.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
+    "@types/graphql": "^14.2.3",
+    "@types/jmespath": "^0.15.2",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^24.10.0",
+    "@types/yargs-parser": "^21.0.3",
+    "cross-env": "^10.1.0",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  }
+}

@@ -1,0 +1,8 @@
+version: 1
+endpoints:
+  apollo:
+    url: https://api.apollographql.com/api/graphql
+    headers:
+      apollographql-client-name: "test"
+      apollographql-client-version: "test"
+      Access-Control-Allow-Origin: "*"

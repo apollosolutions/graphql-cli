@@ -1,0 +1,4 @@
+Usage: gql init [--yes] [--endpoint-name <name>] [--endpoint-url <url>] [--auth-strategy <strategy>] [--path <file>] [--skip-docs] [--skip-env] [--force]
+Summary: Scaffold gql config, docs, and env templates
+
+Interactively (or non-interactively via --yes) generate .gqlrc.yml, sample GraphQL documents, and .env.example without overwriting existing files unless --force is supplied.

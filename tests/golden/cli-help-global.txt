@@ -1,0 +1,23 @@
+gql v0.1.0 — GraphQL from your terminal
+Usage: gql <command> [options]
+
+Ad-hoc GraphQL Operation:
+  <url> <kind> <operation>  Execute a GraphQL operation directly by URL
+
+Endpoints:
+  No endpoints detected. Run "gql init" to scaffold a config.
+
+Internal commands:
+  help         Show global or command-specific help
+  completions  Print shell completion snippet
+  init         Scaffold gql config, docs, and env templates
+  render-json  Render GraphQL JSON payloads (dev)
+  ops          List operations for endpoints or URLs
+  schema       Inspect or save GraphQL schemas (SDL/JSON)
+  explore      Open Apollo Sandbox for a URL or named endpoint
+
+Help / How to use the CLI:
+  - Run `gql help <command>` or `gql <endpoint> --help` for focused guidance.
+  - Use `--select` with `--format table|ndjson` to reshape responses quickly.
+  - Colors follow TTY detection; set NO_COLOR=1 to disable or FORCE_COLOR=1 to enable.
+  - Docs live in the repo under docs/*.md for deeper dives.
