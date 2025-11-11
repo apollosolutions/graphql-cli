@@ -14,7 +14,8 @@ import { InvalidArgsError, NetworkError } from '../errors/exit.js';
 import { buildDefaultSelection, buildDocumentFromFields } from '../fields/builder.js';
 import { parseFields } from '../fields/parser.js';
 import { httpRequest } from '../http/client.js';
-import { printRequestLog } from '../http/diagnostics.js';
+import { printRequestLog, printResponseLog } from '../http/diagnostics.js';
+import { redactHeaders } from '../http/headers.js';
 import { loadSchemaFromUrl } from '../introspection/index.js';
 import { GraphQLResponseLike } from '../output/json.js';
 import { coerceVariables, FlagValue, VariableDefinition } from '../vars/coerce.js';
@@ -34,6 +35,7 @@ export interface UrlModeOptions {
 
 export interface UrlModeDiagnosticsOptions {
   printRequest?: boolean;
+  printResponse?: boolean;
   stderr?: NodeJS.WritableStream;
 }
 
@@ -101,6 +103,17 @@ export async function runUrlMode(params: UrlModeParams): Promise<UrlModeResult> 
   });
 
   const payload = await response.json();
+
+  if (options.diagnostics?.printResponse && options.diagnostics.stderr) {
+    const redacted = redactHeaders(response.headers ?? {});
+    printResponseLog({
+      stream: options.diagnostics.stderr,
+      status: response.status,
+      ok: response.ok,
+      headers: redacted,
+      body: payload,
+    });
+  }
 
   if (!response.ok) {
     throw new NetworkError(`GraphQL request failed (${response.status}).`);

@@ -21,7 +21,7 @@ export class HeaderParseError extends Error {
   }
 }
 
-const REDACTED_TEXT = '***REDACTED***';
+export const REDACTED_TEXT = '***REDACTED***';
 const SENSITIVE_PATTERNS = [
   /authorization/i,
   /proxy-authorization/i,
@@ -84,18 +84,23 @@ export function buildHeaders(layers: HeaderLayer[]): BuiltHeaders {
   }
 
   const headers: Record<string, string> = {};
-  const redacted: Record<string, string> = {};
-
   for (const { display, value } of store.values()) {
     headers[display] = value;
-    redacted[display] = shouldRedact(display) ? REDACTED_TEXT : value;
   }
 
-  return { headers, redacted };
+  return { headers, redacted: redactHeaders(headers) };
 }
 
 export function shouldRedact(name: string): boolean {
   return SENSITIVE_PATTERNS.some((pattern) => pattern.test(name));
+}
+
+export function redactHeaders(headers: Record<string, string>): Record<string, string> {
+  const output: Record<string, string> = {};
+  for (const [name, value] of Object.entries(headers)) {
+    output[name] = shouldRedact(name) ? REDACTED_TEXT : value;
+  }
+  return output;
 }
 
 function findDelimiter(value: string): number {

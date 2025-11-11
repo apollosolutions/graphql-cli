@@ -76,7 +76,9 @@ endpoints:
   apollo:
     url: https://api.apollographql.com/api/graphql
     headers:
-      x-api-key: "${APOLLO_KEY}"
+      apollographql-client-name: "test"
+      apollographql-client-version: "test"
+      Access-Control-Allow-Origin: "*"
     help:
       rename:
         graph: "Graph details"

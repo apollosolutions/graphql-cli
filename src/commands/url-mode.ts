@@ -50,6 +50,7 @@ export function buildUrlModeCommand(): CommandDefinition {
       const outputFormat = resolveOutputFormat(ctx.flags.format);
 
       const printRequest = isTruthyFlag(ctx.flags['print-request']);
+      const printResponse = isTruthyFlag(ctx.flags['print-response']);
 
       const result = await runUrlMode({
         endpoint,
@@ -62,12 +63,14 @@ export function buildUrlModeCommand(): CommandDefinition {
           operationName: documentOverride?.operationName,
           headers: builtHeaders.headers,
           redactedHeaders: builtHeaders.redacted,
-          diagnostics: printRequest
-            ? {
-                printRequest: true,
-                stderr: ctx.io.stderr,
-              }
-            : undefined,
+          diagnostics:
+            printRequest || printResponse
+              ? {
+                  printRequest,
+                  printResponse,
+                  stderr: ctx.io.stderr,
+                }
+              : undefined,
           cache: cacheTtl ? { ttlMs: cacheTtl } : undefined,
         },
       });

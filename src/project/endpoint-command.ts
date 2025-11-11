@@ -190,6 +190,7 @@ export function buildEndpointCommand(options: {
       const schema = await getSchema();
 
       const printRequest = isTruthyFlag(ctx.flags['print-request']);
+      const printResponse = isTruthyFlag(ctx.flags['print-response']);
 
       const result = await runUrlMode({
         endpoint: endpointConfig.url,
@@ -203,12 +204,14 @@ export function buildEndpointCommand(options: {
           document: documentOverride?.document,
           operationName: documentOverride?.operationName,
           redactedHeaders,
-          diagnostics: printRequest
-            ? {
-                printRequest: true,
-                stderr: ctx.io.stderr,
-              }
-            : undefined,
+          diagnostics:
+            printRequest || printResponse
+              ? {
+                  printRequest,
+                  printResponse,
+                  stderr: ctx.io.stderr,
+                }
+              : undefined,
           cache: cacheTtl ? { ttlMs: cacheTtl } : undefined,
         },
       });
